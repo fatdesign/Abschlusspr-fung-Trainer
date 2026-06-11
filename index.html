@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolloquium-Trainer | Abschlussarbeit Fatih Klavun</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-base: #070a13;
+            --bg-surface: rgba(17, 24, 43, 0.7);
+            --bg-card: rgba(30, 41, 59, 0.45);
+            --border-glow: rgba(99, 102, 241, 0.15);
+            --accent-primary: #6366f1;
+            --accent-primary-glow: rgba(99, 102, 241, 0.4);
+            --accent-secondary: #06b6d4;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-danger: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-highlight: #e2e8f0;
+            --font-display: 'Outfit', sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.2);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* App Layout Container */
+        .app-container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+            flex-grow: 1;
+        }
+
+        /* Header styling */
+        header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: var(--bg-surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .logo-area h1 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--accent-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-area p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .grade-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent-success);
+            font-weight: 600;
+        }
+
+        .grade-number {
+            background: var(--accent-success);
+            color: #070a13;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        /* Sidebar info panel */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel {
+            background: var(--bg-surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .panel-title {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .stat-val {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .progress-ring-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 16px 0 8px;
+        }
+
+        .progress-ring-circle {
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            transition: stroke-dashoffset 0.35s;
+        }
+
+        .progress-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            fill: var(--text-main);
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            padding-bottom: 10px;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-lbl {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .info-val {
+            color: var(--text-highlight);
+            font-weight: 600;
+        }
+
+        .info-val-highlight {
+            color: var(--accent-secondary);
+            font-weight: 700;
+        }
+
+        /* Navigation Tabs */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .navigation-tabs {
+            display: flex;
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab-btn.active {
+            color: var(--text-main);
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Card Trainer Mode */
+        .trainer-mode {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            min-height: 480px;
+        }
+
+        .card-perspective {
+            perspective: 1200px;
+            width: 100%;
+            max-width: 680px;
+            height: 450px;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-subtle), var(--shadow-glow);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: border-color 0.3s ease;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, rgba(20, 27, 51, 0.9) 0%, rgba(13, 18, 36, 0.9) 100%);
+            transform: rotateY(0deg);
+            transform-style: preserve-3d;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, rgba(13, 18, 36, 0.95) 0%, rgba(8, 12, 26, 0.95) 100%);
+            transform: rotateY(180deg);
+            transform-style: preserve-3d;
+            border-color: rgba(6, 182, 212, 0.2);
+        }
+
+        .card-badge {
+            align-self: flex-start;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-primary);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .card-back .card-badge {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent-secondary);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .card-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 12px 0;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+            padding-right: 6px;
+            width: 100%;
+        }
+
+        .card-front .card-content {
+            justify-content: center;
+            text-align: center;
+        }
+
+        .card-back .card-content {
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        /* Custom scrollbar styling for webkit */
+        .card-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .card-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .card-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+
+        .question-text {
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            line-height: 1.45;
+            font-weight: 600;
+            color: var(--text-main);
+            max-width: 90%;
+        }
+
+        .answer-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-highlight);
+            text-align: left;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+
+        .highlight-box {
+            background: rgba(6, 182, 212, 0.06);
+            border-left: 3px solid var(--accent-secondary);
+            padding: 10px 14px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            text-align: left;
+            width: 100%;
+        }
+
+        .highlight-title {
+            color: var(--accent-secondary);
+            font-weight: 700;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .tip-box {
+            background: rgba(245, 158, 11, 0.06);
+            border-left: 3px solid var(--accent-warning);
+            padding: 10px 14px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.85rem;
+            text-align: left;
+            width: 100%;
+        }
+
+        .tip-title {
+            color: var(--accent-warning);
+            font-weight: 700;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .click-hint {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            color: var(--accent-primary);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .card-back .click-hint {
+            color: var(--accent-secondary);
+        }
+
+        /* Rating & navigation controls */
+        .controls-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+            max-width: 680px;
+        }
+
+        .rating-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+        }
+
+        .btn {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-red {
+            border-color: rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.04);
+            color: #fca5a5;
+        }
+
+        .btn-red:hover {
+            background: rgba(239, 68, 68, 0.15);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-yellow {
+            border-color: rgba(245, 158, 11, 0.2);
+            background: rgba(245, 158, 11, 0.04);
+            color: #fde047;
+        }
+
+        .btn-yellow:hover {
+            background: rgba(245, 158, 11, 0.15);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-green {
+            border-color: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.04);
+            color: #6ee7b7;
+        }
+
+        .btn-green:hover {
+            background: rgba(16, 185, 129, 0.15);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .navigation-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-btn {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            box-shadow: var(--shadow-glow);
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.25;
+            cursor: not-allowed;
+            background: rgba(30, 41, 59, 0.2);
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        .progress-text-footer {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* List Mode */
+        .list-mode {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.1);
+        }
+
+        .accordion-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .accordion-item {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .accordion-item:hover {
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .accordion-header {
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.95rem;
+            gap: 16px;
+        }
+
+        .accordion-title {
+            color: var(--text-highlight);
+            line-height: 1.4;
+        }
+
+        .accordion-icon {
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+            color: var(--accent-primary);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(13, 18, 36, 0.3);
+        }
+
+        .accordion-body {
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .list-meta {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .list-badge {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        /* Exam Simulation Mode */
+        .exam-mode {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-height: 480px;
+        }
+
+        .exam-intro {
+            text-align: center;
+            max-width: 580px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .exam-intro h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .exam-intro p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .exam-active {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex-grow: 1;
+        }
+
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+        }
+
+        .timer {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--accent-warning);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.05rem;
+        }
+
+        .exam-question-card {
+            background: rgba(30, 41, 59, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .exam-question-num {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-primary);
+        }
+
+        .exam-question-text {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-main);
+        }
+
+        .answer-input-area {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .answer-input-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .answer-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            resize: none;
+            height: 120px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .answer-input:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .exam-show-solution {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .exam-solution-box {
+            background: rgba(6, 182, 212, 0.04);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            border-radius: var(--radius-md);
+            padding: 16px;
+        }
+
+        .exam-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .exam-results {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .results-summary {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(20, 27, 51, 0.6) 0%, rgba(13, 18, 36, 0.6) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .results-summary h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--accent-success);
+        }
+
+        .results-score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.08);
+            border: 3px solid var(--accent-success);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 8px 0;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+        }
+
+        .results-score-val {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .results-score-lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .result-review-item {
+            background: rgba(30, 41, 59, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .result-q-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-highlight);
+        }
+
+        .result-comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .result-comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .result-box {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .result-user {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .result-auth {
+            background: rgba(6, 182, 212, 0.04);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+        }
+
+        .result-header-lbl {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .result-user .result-header-lbl { color: var(--text-muted); }
+        .result-auth .result-header-lbl { color: var(--accent-secondary); }
+
+        .result-self-eval {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            align-self: flex-start;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .eval-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .eval-warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fde047;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .eval-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        /* Confetti canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                order: 2;
+            }
+            .main-content {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .logo-area h1 {
+                font-size: 1.25rem;
+            }
+            .card-perspective {
+                height: 480px;
+            }
+            .question-text {
+                font-size: 1.2rem;
+            }
+            .rating-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header>
+            <div class="logo-area">
+                <h1>Kolloquium-Trainer</h1>
+                <p>Abschlussarbeit Fatih Klavun | PH Salzburg</p>
+            </div>
+            <div class="grade-badge">
+                <span>Note schriftlich:</span>
+                <span class="info-val-highlight">Befriedigend</span>
+                <div class="grade-number">3</div>
+            </div>
+        </header>
+
+        <!-- Sidebar Info -->
+        <aside class="sidebar">
+            
+            <!-- Overall Progress -->
+            <div class="panel fade-in">
+                <div class="panel-title">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.9.9.9 0 0 0 1.8 0A.905.905 0 0 0 8 4zm.1 2.9h-.8a.2.2 0 0 0-.2.2v4.8a.2.2 0 0 0 .2.2h.8a.2.2 0 0 0 .2-.2V7.1a.2.2 0 0 0-.2-.2z"/></svg>
+                    Lernfortschritt
+                </div>
+                
+                <div class="progress-ring-container">
+                    <svg width="120" height="120">
+                        <circle cx="60" cy="60" r="50" fill="transparent" stroke="rgba(255,255,255,0.03)" stroke-width="8"/>
+                        <circle id="progress-circle" cx="60" cy="60" r="50" fill="transparent" stroke="var(--accent-primary)" stroke-width="8"
+                                stroke-dasharray="314.16" stroke-dashoffset="314.16" class="progress-ring-circle"/>
+                        <text id="progress-text-val" x="60" y="60" class="progress-text">0%</text>
+                    </svg>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-val" id="stat-learned">0</div>
+                        <div class="stat-lbl">Sicher (Grün)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-val" id="stat-half">0</div>
+                        <div class="stat-lbl">Unsicher (Gelb)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thesis Dashboard -->
+            <div class="panel fade-in" style="animation-delay: 0.1s;">
+                <div class="panel-title">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM4 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/></svg>
+                    Fakten-Radar (Zitate & Basis)
+                </div>
+                <div class="info-list">
+                    <div class="info-item">
+                        <span class="info-lbl">Thema der Arbeit</span>
+                        <span class="info-val" style="font-size: 0.75rem; line-height: 1.3;">Entwicklungschancen und Herausforderungen von Kindern in Ein-Eltern-Familien</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-lbl">Statistik Österreich (2024)</span>
+                        <span class="info-val"><span class="info-val-highlight">21,3 %</span> aller Familien sind Ein-Eltern-Familien; davon <span class="info-val-highlight">ca. 92 %</span> Mütter.</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-lbl">Armutsrisiko (Zartler 2011)</span>
+                        <span class="info-val">Nahezu <span class="info-val-highlight">30 %</span> der Alleinerziehenden sind armutsgefährdet.</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-lbl">Resilienz (Masten 2024)</span>
+                        <span class="info-val">"Ordinary Magic" (Gewöhnliche Magie) durch funktionierende Standardsysteme.</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-lbl">Bindung (Bischof-Kohler 2024)</span>
+                        <span class="info-val">Unsichtbares Seil (Sicherheitsbasis) und elterliche Feinfühligkeit.</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-lbl">Parentifizierung (Peuckert 2019)</span>
+                        <span class="info-val">Gegenmaßnahme: Autoritativer Erziehungsstil (Wärme & Struktur).</span>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            
+            <!-- Tabs Navigation -->
+            <nav class="navigation-tabs">
+                <button class="tab-btn active" onclick="switchTab('trainer')">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V1zm1.5 1.5v3h5v-3h-5zm0 4v3h5v-3h-5zm0 4v3h5v-3h-5z"/></svg>
+                    Karteikarten
+                </button>
+                <button class="tab-btn" onclick="switchTab('list')">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M1.5 2.5A1.5 1.5 0 0 1 3 1h10a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 13 15H3a1.5 1.5 0 0 1-1.5-1.5v-11zM3 2v12h10V2H3z"/><path d="M4.5 4h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1zm0 2.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1zm0 2.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/></svg>
+                    Fragen-Übersicht
+                </button>
+                <button class="tab-btn" onclick="switchTab('exam')">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/></svg>
+                    Prüfungssimulation
+                </button>
+            </nav>
+
+            <!-- CARD TRAINER SECTION -->
+            <section id="tab-trainer" class="trainer-mode fade-in">
+                
+                <div class="card-perspective" onclick="flipCard()">
+                    <div class="flashcard" id="active-card">
+                        
+                        <!-- Front Face -->
+                        <div class="card-face card-front">
+                            <span class="card-badge" id="card-front-category">Theorie</span>
+                            
+                            <div class="card-content">
+                                <p class="question-text" id="card-front-question">Lade Frage...</p>
+                            </div>
+                            
+                            <div class="card-footer">
+                                <span id="card-front-index">Frage 1 von 17</span>
+                                <div class="click-hint">
+                                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-1.12-1.966a.25.25 0 0 1 .41-.192l2.36 1.966a.25.25 0 0 1 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192V5.034zm-8.828 0a.25.25 0 0 0-.41.192v3.932c0 .21.242.312.384.192l2.36-1.966a.25.25 0 0 0 0-.384L1.586 5.034zM7 11.534V15.5a.25.25 0 0 0 .41.192l1.966-2.36a.25.25 0 0 0 0-.384l-1.966-2.36A.25.25 0 0 0 7 11.534z"/></svg>
+                                    Karte umdrehen
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Back Face -->
+                        <div class="card-face card-back">
+                            <span class="card-badge" id="card-back-category">Antwort</span>
+                            
+                            <div class="card-content">
+                                <div class="answer-text" id="card-back-answer">
+                                    Lade Antwort...
+                                </div>
+                                <div class="highlight-box">
+                                    <div class="highlight-title">Wichtigste Zitate & Fakten</div>
+                                    <div id="card-back-citations">Fakten...</div>
+                                </div>
+                                <div class="tip-box">
+                                    <div class="tip-title">Tipp fürs Kolloquium</div>
+                                    <div id="card-back-tip">Tipp...</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-footer">
+                                <span id="card-back-index">Frage 1 von 17</span>
+                                <div class="click-hint">
+                                    Zurück zur Frage
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="controls-wrapper">
+                    <!-- Progress ratings (show only on back face of card) -->
+                    <div class="rating-row" id="rating-container" style="visibility: hidden;">
+                        <button class="btn btn-red" onclick="rateCard(1); event.stopPropagation();">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg>
+                            Noch nicht (Rot)
+                        </button>
+                        <button class="btn btn-yellow" onclick="rateCard(2); event.stopPropagation();">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>
+                            Unsicher (Gelb)
+                        </button>
+                        <button class="btn btn-green" onclick="rateCard(3); event.stopPropagation();">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+                            Sitzt! (Grün)
+                        </button>
+                    </div>
+
+                    <!-- Left/Right navigation -->
+                    <div class="navigation-row">
+                        <button class="nav-btn" id="prev-card-btn" onclick="prevCard(); event.stopPropagation();">
+                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+                        </button>
+                        <span class="progress-text-footer" id="progress-text-indicator">1 / 17 Karten gelernt</span>
+                        <button class="nav-btn" id="next-card-btn" onclick="nextCard(); event.stopPropagation();">
+                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- FRAGEN LIST SECTION -->
+            <section id="tab-list" class="list-mode fade-in" style="display: none;">
+                
+                <div class="search-row">
+                    <input type="text" id="search-bar" class="search-input" placeholder="Fragen durchsuchen..." onkeyup="filterQuestions()">
+                </div>
+
+                <div class="accordion-container" id="accordion-list">
+                    <!-- Javascript generated items -->
+                </div>
+
+            </section>
+
+            <!-- EXAM SIMULATOR SECTION -->
+            <section id="tab-exam" class="exam-mode fade-in" style="display: none;">
+                
+                <!-- Exam Introduction -->
+                <div id="exam-intro-screen" class="exam-intro">
+                    <h3>Simulation des Abschlussgesprächs</h3>
+                    <p>
+                        In deinem echten Abschlussgespräch im Juli werden dir **drei Fragen** zu deiner schriftlichen Arbeit gestellt. 
+                        Diese Simulation wählt drei zufällige Fragen aus dem Katalog aus. Du hast die Möglichkeit, deine Gedanken stichpunktartig aufzuschreiben und dich anschließend selbst zu bewerten.
+                    </p>
+                    <button class="btn btn-green" onclick="startExamSimulation()" style="padding: 14px 28px; font-size: 1rem; margin-top: 16px;">
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/></svg>
+                        Prüfung jetzt starten
+                    </button>
+                </div>
+
+                <!-- Active Exam Session -->
+                <div id="exam-active-screen" class="exam-active" style="display: none;">
+                    <div class="exam-header">
+                        <span id="exam-progress-lbl">Frage 1 von 3</span>
+                        <div class="timer">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/></svg>
+                            <span id="exam-timer-val">00:00</span>
+                        </div>
+                    </div>
+
+                    <div class="exam-question-card">
+                        <span class="exam-question-num" id="exam-question-category">Theorie</span>
+                        <div class="exam-question-text" id="exam-question-text">Beispiel-Frage?</div>
+                    </div>
+
+                    <div class="answer-input-area">
+                        <label class="answer-input-label" for="exam-user-answer">Deine Notizen / Stichpunkte (während des Sprechens)</label>
+                        <textarea id="exam-user-answer" class="answer-input" placeholder="Schreibe hier stichpunktartig auf, was du dem Prüfer antworten würdest..."></textarea>
+                    </div>
+
+                    <!-- Answer reveal & Rating panel (hidden initially) -->
+                    <div id="exam-reveal-panel" class="exam-show-solution" style="display: none;">
+                        <div class="exam-solution-box">
+                            <div class="highlight-title" style="color: var(--accent-success);">Musterantwort & Kernkonzepte</div>
+                            <div class="answer-text" id="exam-solution-text" style="margin-bottom: 0;">Antwort...</div>
+                        </div>
+
+                        <div class="rating-row">
+                            <button class="btn btn-red" onclick="rateExamQuestion(1)">
+                                Zu ungenau / Falsch (1 Pkt)
+                            </button>
+                            <button class="btn btn-yellow" onclick="rateExamQuestion(2)">
+                                Lückenhaft (2 Pkt)
+                            </button>
+                            <button class="btn btn-green" onclick="rateExamQuestion(3)">
+                                Sehr gut beantwortet (3 Pkt)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="exam-controls" id="exam-reveal-ctrl">
+                        <button class="btn" onclick="revealExamAnswer()" style="border-color: var(--accent-primary); color: var(--text-main);">
+                            Antwort abgleichen & Bewerten
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Exam Results Screen -->
+                <div id="exam-results-screen" class="exam-results" style="display: none;">
+                    <div class="results-summary">
+                        <h3>Prüfungssimulation Beendet!</h3>
+                        <p>Du hast alle 3 zufälligen Fragen durchgearbeitet und selbst bewertet.</p>
+                        
+                        <div class="results-score-circle">
+                            <div class="results-score-val" id="results-score-val">0/9</div>
+                            <div class="results-score-lbl">Punkte</div>
+                        </div>
+
+                        <p id="results-message" style="max-width: 480px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5;">
+                            Das war ein guter Anfang! Übe weiter mit den Karteikarten, um an Sicherheit zu gewinnen.
+                        </p>
+                    </div>
+
+                    <h4 style="font-family: var(--font-display); font-size: 1.2rem; margin-top: 8px;">Antwort-Protokoll</h4>
+                    <div id="results-review-list" style="display: flex; flex-direction: column; gap: 16px;">
+                        <!-- Review cards generated dynamically -->
+                    </div>
+
+                    <div class="exam-controls" style="margin-top: 12px;">
+                        <button class="btn" onclick="resetExamScreen()">
+                            Simulation verlassen
+                        </button>
+                        <button class="btn btn-green" onclick="startExamSimulation()">
+                            Erneut simulieren
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Scripting Area -->
+    <script>
+        // Comprehensive Question Catalog based exactly on Fatih Klavun's thesis content
+        const questionCatalog = [
+            {
+                id: 1,
+                category: "Resilienztheorie",
+                question: "Was verbirgt sich hinter dem Konzept der „Gewöhnlichen Magie“ (Ordinary Magic) nach Ann Masten und wie lässt es sich auf Kinder in Ein-Eltern-Familien anwenden?",
+                answer: "Resilienz – also die psychische Widerstandskraft – ist keine seltene Superkraft. Masten beschreibt sie als „Ordinary Magic“ (gewöhnliche Magie), da sie aus dem normalen Funktionieren alltäglicher adaptiver Systeme hervorgeht (z.B. eine verlässliche Bindung, kognitive Fähigkeiten, Selbstregulation). Für Kinder in Ein-Eltern-Familien bedeutet das: Wenn diese grundlegenden biologischen und psychosozialen Systeme intakt sind (z.B. durch eine stabile Beziehung zur Mutter oder zum Vater), können Kinder auch schwerwiegende familiäre Veränderungen erfolgreich verarbeiten und sich gesund entwickeln.",
+                citations: "Masten (2024), S. 14, 25: Resilienz als Resultat gewöhnlicher, adaptiver Systeme im menschlichen Gehirn und Umfeld.",
+                tip: "Erkläre im Gespräch, dass wir im Hort keine Wunder vollbringen müssen, sondern diese ganz alltäglichen Schutzfaktoren (wie emotionale Sicherheit und Selbstregulierung) stützen."
+            },
+            {
+                id: 2,
+                category: "Bindungstheorie",
+                question: "Erklären Sie die Bedeutung der Bindungstheorie nach Doris Bischof-Kohler im Kontext von Ein-Eltern-Familien. Was ist die „sichere Basis“?",
+                answer: "Eine sichere Bindung dient dem Kind als unsichtbares Seil (Sicherheitsbasis), von dem aus es die Welt exploriert. Sie entsteht durch elterliche Feinfühligkeit (Signale wahrnehmen, richtig interpretieren, prompt und angemessen reagieren). In Ein-Eltern-Familien ist diese Zweierbeziehung oft besonders intensiv und exklusiv. Gelingt es dem verbleibenden Elternteil trotz Belastung, diese feinfühlige Bindung zu gewährleisten, ist das Kind hochgradig geschützt gegen äußere Stressfaktoren.",
+                citations: "Bischof-Kohler (2024), S. 209: Die feinfühlige Interaktion als stärkster Schutzfaktor für eine gesunde kindliche Entwicklung.",
+                tip: "Betone, dass nicht die Familienform (ein oder zwei Eltern), sondern die Qualität dieser Bindung das Fundament für das psychische Wohlbefinden bildet."
+            },
+            {
+                id: 3,
+                category: "Soziale Ungleichheit",
+                question: "Was ist ökonomische Deprivation und warum stellt sie laut Peuckert ein so großes Risiko für die kindliche Entwicklung dar?",
+                answer: "In Österreich sind ca. 30 % der Ein-Eltern-Familien armutsgefährdet (Zartler et al., 2011). Ökonomische Deprivation bezeichnet den Mangel an finanziellen Ressourcen, der zu materiellen Einschränkungen (z.B. keine Sportvereine, kein Schulausflug) und sozialer Ausgrenzung führt. Zudem leben diese Familien oft in kleineren, lauteren Wohnungen. Dies erzeugt chronischen Stress im Familiensystem, was wiederum die Kapazität der Eltern zur feinfühligen Interaktion neurobiologisch und psychisch einschränkt.",
+                citations: "Peuckert (2019), S. 317 / Zartler et al. (2011), S. 15: Fast 3-fach erhöhtes Armutsrisiko im Vergleich zu Paar-Haushalten.",
+                tip: "Erwähne hier das Zusammenspiel aus materiellem Mangel und psychischem Druck auf die Eltern. Armutsbekämpfung ist somit auch aktiver Kinderschutz."
+            },
+            {
+                id: 4,
+                category: "Entwicklungsrisiken",
+                question: "Was versteht man unter dem Begriff „Parentifizierung“ und wie kann ihr in Ein-Eltern-Familien vorgebeugt werden?",
+                answer: "Parentifizierung beschreibt eine Rollenumkehr, bei der das Kind unangemessene Verantwortung für den alleinerziehenden Elternteil übernimmt – sei es auf praktischer Ebene (Haushalt, Finanzen) oder emotionaler Ebene (Partnerersatz, Tröster). Dies überfordert das Kind und stört seine Unbeschwertheit. Vorbeugen kann man dem durch einen autoritativen Erziehungsstil, der emotionale Wärme mit klaren Strukturen und Ansprüchen verbindet, sodass die Eltern in ihrer schützenden Erwachsenenrolle bleiben.",
+                citations: "Peuckert (2019), S. 318 (Parentifizierung) / Masten (2024), S. 197 (Autoritativer Erziehungsstil).",
+                tip: "Erkläre als Freizeitpädagoge, dass Kinder im Hort wieder 'einfach nur Kind sein' dürfen müssen und wir den Eltern beratend zur Seite stehen."
+            },
+            {
+                id: 5,
+                category: "Soziale Netzwerke",
+                question: "Warum bezeichnet Bischof-Kohler zusätzliche Bezugspersonen (z. B. Großeltern) als „alternative Sicherheitsanker“?",
+                answer: "Großeltern oder andere enge Bezugspersonen bieten im Sinne der Bindungstheorie alternative Sicherheitsanker. Wenn der alleinerziehende Elternteil z.B. wegen Erwerbsarbeit ausfällt oder emotional erschöpft ist, fangen diese Bezugspersonen das Kind auf. Sie vermitteln dem Kind, von mehreren Menschen geliebt zu werden. Dieser Beziehungsreichtum stützt das Selbstwertgefühl und fängt die Instabilität einer Ein-Eltern-Konstellation ab.",
+                citations: "Bischof-Kohler (2024), S. 228: Die Relevanz alternativer Bindungspersonen für die emotionale Stabilität.",
+                tip: "Verweise auf das afrikanische Sprichwort 'Es braucht ein ganzes Dorf, um ein Kind zu erziehen' und nenne Großeltern als 'Fels in der Brandung' in Österreich."
+            },
+            {
+                id: 6,
+                category: "Staatliche Hilfen",
+                question: "Wie wirken staatliche Transferleistungen indirekt als Schutzfaktor für die kindliche Entwicklung?",
+                answer: "Leistungen wie Familienbeihilfe, Unterhaltsvorschuss und Steuererleichterungen sichern die materielle Basis. Wenn existenzielle Ängste (Miete, Essen) gelindert werden, verringert sich der psychische Druck auf den alleinerziehenden Elternteil. Dadurch werden mentale Kapazitäten frei, die es den Eltern ermöglichen, geduldiger, aufmerksamer und feinfühliger auf die Bedürfnisse ihrer Kinder einzugehen.",
+                citations: "Peuckert (2019), S. 315: Finanzielle Absicherung entlastet das familiäre Beziehungsklima.",
+                tip: "Verbinde hier die makroökonomische Ebene (Staat) mit die mikro-psychologischen Ebene (elterliche Feinfühligkeit zu Hause)."
+            },
+            {
+                id: 7,
+                category: "Ko-Elternschaft",
+                question: "Was macht eine funktionierende „Ko-Elternschaft“ nach einer Trennung aus und welches Risiko droht dem Kind bei einem Scheitern?",
+                answer: "Ko-Elternschaft bedeutet, dass getrennte Eltern auf Elternebene kooperieren und die Verantwortung für das Kind teilen, auch wenn die Paarbeziehung beendet ist. Ein respektvoller Umgang gibt dem Kind Stabilität und signalisiert: 'Meine Eltern halten bei mir zusammen.' Scheitert dies, gerät das Kind in schwere Loyalitätskonflikte. Es fühlt sich zwischen den Fronten zerrissen, was seine psychische Widerstandskraft massiv schwächt.",
+                citations: "Peuckert (2019), S. 322: Kooperation auf Elternebene schützt Kinder vor nachehelichen Loyalitätskonflikten.",
+                tip: "Mache deutlich, dass das Kind niemals zum Spielball oder Informationsboten zwischen den getrennten Eltern instrumentalisiert werden darf."
+            },
+            {
+                id: 8,
+                category: "Hort & Freizeitpädagogik",
+                question: "Welche konkrete Rolle spielen Freizeitpädagogen sowie der Hort im Resilienzprozess von Kindern aus Ein-Eltern-Familien?",
+                answer: "Der Hort bietet den Kindern einen verlässlichen, sicheren und vor allem stigmatisierungsfreien Rahmen mit klaren Regeln und sozialer Bestätigung. Wir fangen Zeitnot der Eltern auf und entlasten sie im Alltag. Durch gezielte pädagogische Angebote fördern wir Selbstwirksamkeit (Erfahrung: 'Ich kann etwas bewirken') und das Problemlösevermögen der Kinder. So stärken wir das Humankapital der Kinder direkt vor Ort.",
+                citations: "Masten (2024), S. 215 / Bezug zur praktischen Arbeit im Hort.",
+                tip: "Hier kannst du stark mit deiner eigenen Rolle argumentieren. Hort als stabiles 'Teildorf' im sozialen Netzwerk des Kindes."
+            },
+            {
+                id: 9,
+                category: "Paradigmenwechsel",
+                question: "Was unterscheidet die „Defizitperspektive“ von der „Ressourcen- bzw. Chancenperspektive“ bei Ein-Eltern-Familien?",
+                answer: "Die veraltete Defizitperspektive geht davon aus, dass in Ein-Eltern-Familien grundsätzlich etwas Wesentliches fehlt und diese Kinder zwangsläufig benachteiligt sind. Die moderne Ressourcenperspektive schaut stattdessen auf die Qualität der Beziehungen und Ressourcen. Sie betont Chancen wie gewonnene Konfliktfreiheit nach Trennungen, gesteigerte Selbstständigkeit und die persönliche Weiterentwicklung der Beteiligten.",
+                citations: "Peuckert (2019), S. 314: Empirische Belege zur gewonnenen Entscheidungsfreiheit und Autonomie.",
+                tip: "Erkläre, dass du mit deiner Arbeit bewusst den Fokus weg vom 'Mangel' hin zu den 'Kraftquellen' verschieben wolltest."
+            },
+            {
+                id: 10,
+                category: "Neurobiologie & Stress",
+                question: "Erklären Sie den Zusammenhang zwischen Zeitnot, kumulativem Stress und der elterlichen Erziehungsfähigkeit.",
+                answer: "Wenn ein Elternteil Haushalt, Erziehung und Erwerbsarbeit allein bewältigt, droht chronischer Zeitmangel. Häufen sich mehrere Belastungen an (kumulativer Stress), schüttet der Körper vermehrt Stresshormone (wie Cortisol) aus. Neurobiologisch blockiert dieser dauerhaft hohe Stresspegel die Empathiefähigkeit und Impulskontrolle im Gehirn der Eltern. Dadurch fällt es ihnen phasenweise schwerer, die Signale des Kindes feinfühlig wahrzunehmen und prompt zu spiegeln.",
+                citations: "Zusammenhang von Stress und Feinfühligkeit (vgl. Bischof-Kohler, 2024 / Masten, 2024).",
+                tip: "Erkläre, dass Erschöpfung der Eltern keine böse Absicht ist, sondern eine neurobiologische Stressreaktion, weshalb Entlastung (z.B. durch den Hort) so wichtig ist."
+            },
+            {
+                id: 11,
+                category: "Humankapital",
+                question: "Wie trägt das Bildungssystem und insbesondere der Hort zur Stärkung des Humankapital bei, und warum schützt dies Kinder aus Risikogruppen?",
+                answer: "Humankapital umfasst Bildung, soziale Kompetenzen, Gesundheit und kognitive Fähigkeiten. Der Hort fördert diese Bereiche gezielt durch strukturierte Freizeitangebote, Hausaufgabenbegleitung und soziales Lernen in der Gruppe. Bei Kindern, die durch Armut oder familiäre Krisen einem erhöhten Risiko ausgesetzt sind, wirkt ein hohes Humankapital als mächtiger Schutzfaktor, da es ihre Selbstwirksamkeit und ihre künftigen Lebens- und Lösungsstrategien stärkt.",
+                citations: "Masten (2024), S. 215: Die protektive Wirkung von Bildungs- und Sozialkompetenzförderung bei Risikokindern.",
+                tip: "Verbinde das Humankapital mit dem Gefühl der Selbstwirksamkeit – der Überzeugung, das eigene Leben aktiv gestalten zu können."
+            },
+            {
+                id: 12,
+                category: "Fazit",
+                question: "Fassen Sie das Fazit und die Kernbotschaften Ihrer Abschlussarbeit prägnant zusammen.",
+                answer: "Die Arbeit zeigt drei Kernpunkte: 1. Die kindliche Entwicklung wird nicht primär durch die Familienform, sondern durch die Qualität der Bindung bestimmt. Eine feinfühlige Bezugsperson kann viel Stress kompensieren. 2. Materielle Absicherung und unbürokratische staatliche Hilfen sind unverzichtbar, um den psychischen Druck von den Eltern zu nehmen. 3. Es benötigt ein stabiles soziales Netzwerk ('Dorf') aus Großeltern, Hort und Schule, um Kinder wirksam zu stützen, Vorurteile abzubauen und Chancengleichheit herzustellen.",
+                citations: "Abschlussarbeit Fatih Klavun, Kapitel 6 (Fazit).",
+                tip: "Nutze dieses Fazit, um ein starkes, plädierendes Schlusswort im Abschlussgespräch zu halten."
+            },
+            {
+                id: 13,
+                category: "Reflexion / Forschungsinteresse",
+                question: "Warum haben Sie sich entschieden, die Entwicklungschancen von Kindern in Ein-Eltern-Familien speziell aus der Perspektive der Freizeitpädagogik (Hort) zu beleuchten? Was war Ihr Hintergedanke?",
+                answer: "Der Hintergedanke war, die wissenschaftliche Debatte, die oft sehr makro-soziologisch (Statistiken, Gesetze) oder therapeutisch geführt wird, auf den konkreten pädagogischen Alltag im Hort zu übertragen. Freizeitpädagogen verbringen täglich viel unstrukturierte Zeit mit den Kindern. Ich wollte zeigen, dass der Hort nicht nur eine Verwahrstelle zur Vereinbarkeit von Familie und Beruf ist, sondern eine aktive, kompensatorische Ressource im Sinne der Resilienzförderung darstellt.",
+                citations: "Einleitung & Kapitel 5 (Der Hort als sozialpädagogischer Raum).",
+                tip: "Betone im Gespräch deine Rolle als Bindeglied: Als angehender Freizeitpädagoge hast du die theoretischen Modelle direkt mit deiner beruflichen Praxis abgeglichen."
+            },
+            {
+                id: 14,
+                category: "Reflexion / Theorieauswahl",
+                question: "Sie stützen sich intensiv auf das Bindungskonzept von Doris Bischof-Kohler. Warum haben Sie dieses Modell gewählt und warum betonen Sie so stark, dass die Bindung wichtiger ist als die Familienform?",
+                answer: "Das Bindungskonzept von Bischof-Kohler liefert die neurobiologische und psychologische Erklärung dafür, wie Schutzfaktoren wirken. Die 'sichere Basis' ermöglicht dem Kind Exploration trotz widriger Umstände. Mein Hintergedanke war es, das Vorurteil zu entkräften, dass Ein-Eltern-Familien per se 'unvollständig' oder mangelhaft sind. Wenn der verbleibende Elternteil eine feinfühlige, sichere Bindung aufbauen kann, hat das Kind dieselben gesunden Entwicklungschancen wie in einer klassischen Paarfamilie.",
+                citations: "Bischof-Kohler (2024), S. 209 (Feinfühligkeit und Bindungsqualität).",
+                tip: "Diese Argumentation hilft dir, das Defizit-Modell elegant aufzubrechen. Es geht im Kolloquium darum zu zeigen: Qualität der Interaktion schlägt Struktur."
+            },
+            {
+                id: 15,
+                category: "Reflexion / Argumentation",
+                question: "In Ihrer Arbeit verknüpfen Sie materielle Armut mit reduzierter elterlicher Feinfühligkeit. Welcher systemische Hintergedanke steckt hinter dieser Kausalitätskette?",
+                answer: "Der Hintergedanke war, das Thema Armut von moralischen Schuldzuweisungen zu befreien. Ökonomische Deprivation bedeutet chronischen Stress. Dieser Stress schüttet Cortisol aus und blockiert jene Gehirnareale (präfrontaler Cortex), die für Geduld, Impulskontrolle und feinfühlige Spiegelung notwendig sind. Damit argumentiere ich systemisch: Armutsbekämpfung ist kein reines Luxusthema, sondern eine notwendige neurologische Entlastung, damit Eltern psychisch überhaupt in der Lage sein können, feinfühlig zu erziehen.",
+                citations: "Zusammenhang zwischen Stress und Kognition (Kapitel 4.1 und 5.2).",
+                tip: "Erkläre den Prüfern diesen Kausalzusammenhang ruhig schrittweise: Finanzieller Druck -> Chronischer Stress -> Physische/Neurologische Blockade -> verminderte Feinfühligkeit."
+            },
+            {
+                id: 16,
+                category: "Reflexion / Pädagogischer Ansatz",
+                question: "Sie befürworten den autoritativen Erziehungsstil zur Vorbeugung von Parentifizierung. Was war Ihre Motivation für diese Empfehlung im Kontext von Ein-Eltern-Familien?",
+                answer: "In Ein-Eltern-Familien verschwimmen durch Überlastung oft die Generationengrenzen – das Kind rutscht ungewollt in eine Partner- oder Haushaltsführungsrolle (Parentifizierung). Der autoritative Erziehungsstil (Wärme kombiniert mit klaren Grenzen) ist hier der ideale Puffer: Er gibt dem Kind die nötige emotionale Zuwendung (Wärme), fordert aber gleichzeitig klare Leitplanken und Strukturen ein, die das Kind in der geschützten Rolle des Kindes belassen und den Erwachsenen in der Verantwortung halten.",
+                citations: "Peuckert (2019), S. 318 (Parentifizierung) / Masten (2024), S. 197.",
+                tip: "Erkläre im Gespräch, dass 'Struktur' bei Trennungen das wichtigste Fundament für das Kind ist, da seine äußere Welt sich bereits stark verändert hat."
+            },
+            {
+                id: 17,
+                category: "Reflexion / Gender & Methodik",
+                question: "In Ihrer Arbeit liegt der Fokus stark auf alleinerziehenden Müttern. Warum haben Sie Väter in Ihrer Analyse eher sekundär behandelt, und wie reflektieren Sie diese Entscheidung?",
+                answer: "Die Entscheidung basiert auf der empirischen Datenlage: Laut Statistik Österreich sind ca. 92 % aller Alleinerziehenden Frauen. Um einen praxisnahen und statistisch repräsentativen Beitrag zu leisten, musste ich mich auf diese überwältigende Mehrheit konzentrieren. Methodisch bedeutet das jedoch nicht, dass Väter unwichtig sind; sie werden in meiner Arbeit als wichtige alternative Bezugspersonen und im Rahmen einer gelingenden Ko-Elternschaft als essenzieller Schutzfaktor beschrieben.",
+                citations: "Statistik Österreich (2024) / Peuckert (2019), S. 322 (Ko-Elternschaft).",
+                tip: "Zeige dich hier selbstkritisch aber methodisch sauber. Die Fokussierung war notwendig, um im Rahmen der Bachelorarbeit tiefe Einblicke statt oberflächlicher Verallgemeinerungen zu liefern."
+            }
+        ];
+
+        // State variables
+        let currentCardIndex = 0;
+        let activeTab = 'trainer';
+        let cardStates = {}; // key: questionId, value: 1 (red), 2 (yellow), 3 (green)
+        
+        // Exam state
+        let examQuestions = [];
+        let currentExamIndex = 0;
+        let examUserAnswers = [];
+        let examRatings = [];
+        let examTimer = null;
+        let examTimeElapsed = 0;
+
+        // Load data from LocalStorage on initialization
+        function initApp() {
+            const savedStates = localStorage.getItem('abschlussarbeit_trainer_states');
+            if (savedStates) {
+                cardStates = JSON.parse(savedStates);
+            } else {
+                // Initialize all cards as untouched
+                questionCatalog.forEach(q => {
+                    cardStates[q.id] = 0;
+                });
+            }
+            updateStatsUI();
+            loadCard(0);
+            renderAccordionList();
+        }
+
+        // Play synth-like sound effects to elevate the UX
+        function playSound(type) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(450, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(700, ctx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.08);
+                } else if (type === 'flip') {
+                    osc.frequency.setValueAtTime(260, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.06, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.15);
+                } else if (type === 'success') {
+                    const now = ctx.currentTime;
+                    // Cute chord progression
+                    [523.25, 659.25, 783.99, 1046.50].forEach((f, idx) => {
+                        const o = ctx.createOscillator();
+                        const g = ctx.createGain();
+                        o.connect(g);
+                        g.connect(ctx.destination);
+                        o.frequency.setValueAtTime(f, now + idx * 0.07);
+                        g.gain.setValueAtTime(0.04, now + idx * 0.07);
+                        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.18);
+                        o.start(now + idx * 0.07);
+                        o.stop(now + idx * 0.07 + 0.22);
+                    });
+                }
+            } catch (e) {
+                console.log("Audio contexts are blocked or not supported on this browser.");
+            }
+        }
+
+        // Confetti visual effect on successful completion of Exam mode
+        function triggerConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let particles = [];
+            const colors = ['#6366f1', '#06b6d4', '#10b981', '#f59e0b', '#ec4899'];
+
+            for (let i = 0; i < 120; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    r: Math.random() * 6 + 4,
+                    d: Math.random() * canvas.height,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    tilt: Math.random() * 10 - 5,
+                    tiltAngleIncremental: Math.random() * 0.07 + 0.02,
+                    tiltAngle: 0
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let remaining = false;
+                
+                particles.forEach((p, idx) => {
+                    p.tiltAngle += p.tiltAngleIncremental;
+                    p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                    p.x += Math.sin(p.tiltAngle);
+                    p.tilt = Math.sin(p.tiltAngle - idx / 3) * 15;
+
+                    if (p.y <= canvas.height) {
+                        remaining = true;
+                    }
+
+                    ctx.beginPath();
+                    ctx.lineWidth = p.r;
+                    ctx.strokeStyle = p.color;
+                    ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                    ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                    ctx.stroke();
+                });
+
+                if (remaining) {
+                    requestAnimationFrame(draw);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            draw();
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            playSound('click');
+            activeTab = tabId;
+            
+            // Toggle active classes on tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Hide all tabs
+            document.getElementById('tab-trainer').style.display = 'none';
+            document.getElementById('tab-list').style.display = 'none';
+            document.getElementById('tab-exam').style.display = 'none';
+
+            // Show selected tab
+            document.getElementById(`tab-${tabId}`).style.display = tabId === 'trainer' ? 'flex' : 'block';
+
+            // If switching to trainer, make sure it's reset to front side
+            if (tabId === 'trainer') {
+                const card = document.getElementById('active-card');
+                card.classList.remove('flipped');
+                document.getElementById('rating-container').style.visibility = 'hidden';
+                loadCard(currentCardIndex);
+            }
+        }
+
+        // Stats UI calculations & animations
+        function updateStatsUI() {
+            let total = questionCatalog.length;
+            let greenCount = 0;
+            let yellowCount = 0;
+            
+            questionCatalog.forEach(q => {
+                if (cardStates[q.id] === 3) greenCount++;
+                if (cardStates[q.id] === 2) yellowCount++;
+            });
+
+            document.getElementById('stat-learned').innerText = greenCount;
+            document.getElementById('stat-half').innerText = yellowCount;
+
+            // Calculate percentage based on green (100% value) and yellow (50% value)
+            let percentage = Math.round(((greenCount + (yellowCount * 0.5)) / total) * 100);
+            if (percentage > 100) percentage = 100;
+
+            // Animate progress circle
+            const circle = document.getElementById('progress-circle');
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+            
+            document.getElementById('progress-text-val').textContent = `${percentage}%`;
+            document.getElementById('progress-text-indicator').textContent = `${greenCount} / ${total} Karten beherrscht`;
+        }
+
+        // Load specific flashcard
+        function loadCard(index) {
+            if (index < 0 || index >= questionCatalog.length) return;
+            currentCardIndex = index;
+            const q = questionCatalog[index];
+
+            // Setup Card content
+            document.getElementById('card-front-category').innerText = q.category;
+            document.getElementById('card-front-question').innerText = q.question;
+            document.getElementById('card-front-index').innerText = `Frage ${index + 1} von ${questionCatalog.length}`;
+
+            document.getElementById('card-back-category').innerText = q.category + " - Antwort";
+            document.getElementById('card-back-answer').innerText = q.answer;
+            document.getElementById('card-back-citations').innerText = q.citations;
+            document.getElementById('card-back-tip').innerText = q.tip;
+            document.getElementById('card-back-index').innerText = `Frage ${index + 1} von ${questionCatalog.length}`;
+
+            // Handle navigation button states
+            document.getElementById('prev-card-btn').disabled = index === 0;
+            document.getElementById('next-card-btn').disabled = index === questionCatalog.length - 1;
+
+            // Apply card boundary styling glow depending on rating state
+            const cardFront = document.querySelector('.card-front');
+            const cardBack = document.querySelector('.card-back');
+            const state = cardStates[q.id];
+
+            cardFront.style.borderColor = 'rgba(99, 102, 241, 0.2)';
+            cardBack.style.borderColor = 'rgba(6, 182, 212, 0.2)';
+
+            if (state === 1) { // Red
+                cardFront.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+                cardBack.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+            } else if (state === 2) { // Yellow
+                cardFront.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+                cardBack.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+            } else if (state === 3) { // Green
+                cardFront.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+                cardBack.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+            }
+        }
+
+        function flipCard() {
+            playSound('flip');
+            const card = document.getElementById('active-card');
+            card.classList.toggle('flipped');
+
+            // Toggle Visibility of Rating controls (only on back side)
+            const isFlipped = card.classList.contains('flipped');
+            document.getElementById('rating-container').style.visibility = isFlipped ? 'visible' : 'hidden';
+        }
+
+        function nextCard() {
+            if (currentCardIndex < questionCatalog.length - 1) {
+                playSound('click');
+                // Ensure card is flipped to front side first
+                const card = document.getElementById('active-card');
+                card.classList.remove('flipped');
+                document.getElementById('rating-container').style.visibility = 'hidden';
+                
+                setTimeout(() => {
+                    loadCard(currentCardIndex + 1);
+                }, 150); // small delay to let transition finish
+            }
+        }
+
+        function prevCard() {
+            if (currentCardIndex > 0) {
+                playSound('click');
+                const card = document.getElementById('active-card');
+                card.classList.remove('flipped');
+                document.getElementById('rating-container').style.visibility = 'hidden';
+
+                setTimeout(() => {
+                    loadCard(currentCardIndex - 1);
+                }, 150);
+            }
+        }
+
+        // Rate the difficulty of the card
+        function rateCard(rating) {
+            playSound('click');
+            const q = questionCatalog[currentCardIndex];
+            cardStates[q.id] = rating;
+
+            // Save state to local storage
+            localStorage.setItem('abschlussarbeit_trainer_states', JSON.stringify(cardStates));
+            updateStatsUI();
+
+            // Rerender specific border glow immediately
+            loadCard(currentCardIndex);
+
+            // Automatically move to the next card after rating (smooth flow)
+            if (currentCardIndex < questionCatalog.length - 1) {
+                setTimeout(() => {
+                    nextCard();
+                }, 350);
+            }
+        }
+
+        // List View: Render Accordion elements
+        function renderAccordionList() {
+            const listContainer = document.getElementById('accordion-list');
+            listContainer.innerHTML = '';
+
+            questionCatalog.forEach(q => {
+                const item = document.createElement('div');
+                item.className = 'accordion-item';
+                item.id = `accordion-item-${q.id}`;
+
+                let ratingBadge = '';
+                const state = cardStates[q.id];
+                if (state === 1) ratingBadge = '<span class="list-badge eval-danger">Noch nicht</span>';
+                if (state === 2) ratingBadge = '<span class="list-badge eval-warning">Unsicher</span>';
+                if (state === 3) ratingBadge = '<span class="list-badge eval-success">Sitzt!</span>';
+
+                item.innerHTML = `
+                    <div class="accordion-header" onclick="toggleAccordion(${q.id})">
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 0.7rem; color: var(--accent-primary); text-transform: uppercase; letter-spacing: 0.5px;">${q.category}</span>
+                                ${ratingBadge}
+                            </div>
+                            <span class="accordion-title">${q.question}</span>
+                        </div>
+                        <svg class="accordion-icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p class="answer-text" style="color: var(--text-main); font-weight: 500;">${q.answer}</p>
+                            <div class="highlight-box" style="margin-top: 12px; margin-bottom: 8px;">
+                                <div class="highlight-title">Wichtigste Zitate & Literaturbezug</div>
+                                <div>${q.citations}</div>
+                            </div>
+                            <div class="tip-box">
+                                <div class="tip-title">Tipp fürs Abschlussgespräch</div>
+                                <div>${q.tip}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        function toggleAccordion(id) {
+            playSound('click');
+            const item = document.getElementById(`accordion-item-${id}`);
+            const content = item.querySelector('.accordion-content');
+            const isActive = item.classList.contains('active');
+
+            // Close all other accordions first
+            document.querySelectorAll('.accordion-item').forEach(el => {
+                el.classList.remove('active');
+                el.querySelector('.accordion-content').style.maxHeight = null;
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+
+        // Live filtering search bar for accordion list
+        function filterQuestions() {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            questionCatalog.forEach(q => {
+                const item = document.getElementById(`accordion-item-${q.id}`);
+                const text = (q.question + " " + q.answer + " " + q.category).toLowerCase();
+                
+                if (text.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Exam Simulation Logic
+        function startExamSimulation() {
+            playSound('success');
+            
+            // Randomly select 3 unique questions from the catalog
+            const shuffled = [...questionCatalog].sort(() => 0.5 - Math.random());
+            examQuestions = shuffled.slice(0, 3);
+            
+            currentExamIndex = 0;
+            examUserAnswers = [];
+            examRatings = [];
+            
+            // Hide intro screen & show active exam screen
+            document.getElementById('exam-intro-screen').style.display = 'none';
+            document.getElementById('exam-results-screen').style.display = 'none';
+            document.getElementById('exam-active-screen').style.display = 'flex';
+            
+            // Start Timer
+            examTimeElapsed = 0;
+            updateExamTimerUI();
+            if (examTimer) clearInterval(examTimer);
+            examTimer = setInterval(() => {
+                examTimeElapsed++;
+                updateExamTimerUI();
+            }, 1000);
+
+            loadExamQuestion();
+        }
+
+        function updateExamTimerUI() {
+            const mins = Math.floor(examTimeElapsed / 60).toString().padStart(2, '0');
+            const secs = (examTimeElapsed % 60).toString().padStart(2, '0');
+            document.getElementById('exam-timer-val').innerText = `${mins}:${secs}`;
+        }
+
+        function loadExamQuestion() {
+            const q = examQuestions[currentExamIndex];
+            
+            document.getElementById('exam-progress-lbl').innerText = `Frage ${currentExamIndex + 1} von 3`;
+            document.getElementById('exam-question-category').innerText = q.category;
+            document.getElementById('exam-question-text').innerText = q.question;
+            
+            // Clear text area & hide solution reveal
+            document.getElementById('exam-user-answer').value = '';
+            document.getElementById('exam-user-answer').disabled = false;
+            document.getElementById('exam-reveal-panel').style.display = 'none';
+            document.getElementById('exam-reveal-ctrl').style.display = 'flex';
+        }
+
+        function revealExamAnswer() {
+            playSound('flip');
+            const q = examQuestions[currentExamIndex];
+            
+            // Save typed stichpunkte
+            const textVal = document.getElementById('exam-user-answer').value.trim();
+            examUserAnswers[currentExamIndex] = textVal || "[Keine Notizen gemacht]";
+            
+            // Disable text area
+            document.getElementById('exam-user-answer').disabled = true;
+
+            // Load answer and display rating panel
+            document.getElementById('exam-solution-text').innerHTML = `
+                <p style="margin-bottom: 12px; font-weight: 500;">${q.answer}</p>
+                <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">
+                    <strong>Zitate:</strong> ${q.citations}<br>
+                    <strong>Kolloquiumstipp:</strong> ${q.tip}
+                </div>
+            `;
+            
+            document.getElementById('exam-reveal-panel').style.display = 'flex';
+            document.getElementById('exam-reveal-ctrl').style.display = 'none';
+        }
+
+        function rateExamQuestion(points) {
+            playSound('click');
+            examRatings[currentExamIndex] = points;
+
+            if (currentExamIndex < 2) {
+                // Load next question
+                currentExamIndex++;
+                loadExamQuestion();
+            } else {
+                // End Exam Simulation
+                endExamSimulation();
+            }
+        }
+
+        function endExamSimulation() {
+            clearInterval(examTimer);
+            playSound('success');
+            triggerConfetti();
+
+            // Calculate total points
+            const totalPoints = examRatings.reduce((sum, val) => sum + val, 0);
+
+            document.getElementById('exam-active-screen').style.display = 'none';
+            document.getElementById('exam-results-screen').style.display = 'flex';
+            
+            document.getElementById('results-score-val').innerText = `${totalPoints}/9`;
+
+            // Display funny or encouraging message
+            let msg = '';
+            if (totalPoints >= 8) {
+                msg = "Hervorragend! Du hast alle Fragen souverän beantwortet. Mit dieser Vorbereitung wirst du das Kolloquium mit Leichtigkeit bestehen!";
+            } else if (totalPoints >= 5) {
+                msg = "Gute Leistung! Die meisten Kernkonzepte sitzen. Wiederhole noch gezielt die Schwachstellen, dann steht einer sehr guten Note nichts im Weg.";
+            } else {
+                msg = "Nutz diese Simulation als Weckruf: Einige Zitate und Kernkonzepte müssen noch gefestigt werden. Nutze die Karteikarten, um dich abzufragen.";
+            }
+            document.getElementById('results-message').innerText = msg;
+
+            // Render Review List
+            const reviewContainer = document.getElementById('results-review-list');
+            reviewContainer.innerHTML = '';
+
+            examQuestions.forEach((q, idx) => {
+                const rating = examRatings[idx];
+                let evalClass = 'eval-danger';
+                let ratingTxt = 'Mangelhaft (1 Pkt)';
+                if (rating === 2) {
+                    evalClass = 'eval-warning';
+                    ratingTxt = 'Lückenhaft (2 Pkt)';
+                } else if (rating === 3) {
+                    evalClass = 'eval-success';
+                    ratingTxt = 'Sehr gut (3 Pkt)';
+                }
+
+                const card = document.createElement('div');
+                card.className = 'result-review-item';
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                        <span class="result-q-title">Frage ${idx + 1}: ${q.question}</span>
+                        <span class="result-self-eval ${evalClass}">${ratingTxt}</span>
+                    </div>
+                    <div class="result-comparison-grid">
+                        <div class="result-box result-user">
+                            <span class="result-header-lbl">Deine Notizen</span>
+                            <p style="white-space: pre-wrap;">${examUserAnswers[idx]}</p>
+                        </div>
+                        <div class="result-box result-auth">
+                            <span class="result-header-lbl">Musterantwort / Literaturbezug</span>
+                            <p>${q.answer}</p>
+                            <p style="margin-top: 8px; font-size: 0.75rem; opacity: 0.85;"><strong>Citations:</strong> ${q.citations}</p>
+                        </div>
+                    </div>
+                `;
+                reviewContainer.appendChild(card);
+            });
+        }
+
+        function resetExamScreen() {
+            playSound('click');
+            document.getElementById('exam-results-screen').style.display = 'none';
+            document.getElementById('exam-intro-screen').style.display = 'flex';
+        }
+
+        // Window Load Trigger
+        window.addEventListener('load', () => {
+            initApp();
+        });
+    </script>
+</body>
+</html>
