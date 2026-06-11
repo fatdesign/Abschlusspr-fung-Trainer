@@ -333,14 +333,39 @@
         .card-front {
             background: linear-gradient(135deg, rgba(20, 27, 51, 0.9) 0%, rgba(13, 18, 36, 0.9) 100%);
             transform: rotateY(0deg);
-            transform-style: preserve-3d;
+            z-index: 2;
         }
 
         .card-back {
             background: linear-gradient(135deg, rgba(13, 18, 36, 0.95) 0%, rgba(8, 12, 26, 0.95) 100%);
             transform: rotateY(180deg);
-            transform-style: preserve-3d;
             border-color: rgba(6, 182, 212, 0.2);
+            z-index: 1;
+        }
+
+        /* WebKit/Safari backface mirror fix: hide inactive face completely at 90deg rotation */
+        .flashcard .card-front {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.1s 0.25s, visibility 0.1s 0.25s;
+        }
+        
+        .flashcard.flipped .card-front {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.1s 0.25s, visibility 0.1s 0.25s;
+        }
+        
+        .flashcard .card-back {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.1s 0.25s, visibility 0.1s 0.25s;
+        }
+        
+        .flashcard.flipped .card-back {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.1s 0.25s, visibility 0.1s 0.25s;
         }
 
         .card-badge {
@@ -1024,17 +1049,76 @@
         }
 
         @media (max-width: 640px) {
+            .app-container {
+                padding: 12px;
+                gap: 16px;
+            }
+            header {
+                padding: 12px 16px;
+            }
             .logo-area h1 {
                 font-size: 1.25rem;
             }
+            .panel {
+                padding: 16px;
+            }
             .card-perspective {
-                height: 480px;
+                height: 460px;
+            }
+            .card-face {
+                padding: 20px;
             }
             .question-text {
-                font-size: 1.2rem;
+                font-size: 1.15rem;
+                max-width: 100%;
+            }
+            .answer-text {
+                font-size: 0.85rem;
+                margin-bottom: 12px;
+            }
+            .highlight-box, .tip-box {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 8px;
             }
             .rating-row {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            .btn {
+                padding: 10px 4px;
+                font-size: 0.72rem;
+                flex-direction: column;
+                gap: 4px;
+                text-align: center;
+                border-radius: var(--radius-sm);
+            }
+            .btn svg {
+                width: 14px;
+                height: 14px;
+            }
+            .navigation-row {
+                margin-top: 4px;
+            }
+            .nav-btn {
+                width: 38px;
+                height: 38px;
+            }
+            .progress-text-footer {
+                font-size: 0.75rem;
+            }
+            .results-summary {
+                padding: 20px;
+            }
+            .results-summary h3 {
+                font-size: 1.4rem;
+            }
+            .results-score-circle {
+                width: 90px;
+                height: 90px;
+            }
+            .results-score-val {
+                font-size: 1.8rem;
             }
         }
     </style>
